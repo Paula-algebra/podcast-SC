@@ -54,6 +54,10 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain mvcFilterChain(HttpSecurity http) throws Exception {
         http
+            .sessionManagement(session -> session
+                    .enableSessionUrlRewriting(false)
+            )
+
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/", "/auth/**", "/css/**", "/js/**", "/webjars/**",
@@ -83,6 +87,10 @@ public class SecurityConfig {
             .headers(headers -> headers
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(
                     XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                // CSP vulnerability fix
+                .contentSecurityPolicy((csp) -> csp
+                        .policyDirectives("script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; default-src 'self'; style-src 'self';")
+                )
             );
 
         return http.build();
