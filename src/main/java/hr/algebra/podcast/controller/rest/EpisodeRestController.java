@@ -1,5 +1,6 @@
 package hr.algebra.podcast.controller.rest;
 
+import org.springframework.web.bind.annotation.*;
 import hr.algebra.podcast.dto.EpisodeDto;
 import hr.algebra.podcast.entity.User;
 import hr.algebra.podcast.enums.ListeningStatus;
@@ -13,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,7 +40,7 @@ public class EpisodeRestController {
     public ResponseEntity<EpisodeDto> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(episodeService.findById(id));
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException _) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -76,7 +75,7 @@ public class EpisodeRestController {
     ) {
         try {
             return ResponseEntity.ok(episodeService.update(id, dto));
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException _) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -88,7 +87,7 @@ public class EpisodeRestController {
         try {
             episodeService.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException _) {
             return ResponseEntity.notFound().build();
         }
     }

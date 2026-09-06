@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,46 +33,46 @@
                 <div class="section-label">Episode Info</div>
 
                 <div class="fg full">
-                    <label class="required">Episode Title</label>
-                    <input class="form-control" type="text" th:field="*{title}" placeholder="e.g. The Wellness Industrial Complex">
+                    <label for="title" class="required">Episode Title</label>
+                    <input id="title" class="form-control" type="text" th:field="*{title}" placeholder="e.g. The Wellness Industrial Complex">
                     <span class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
                 </div>
 
                 <div class="fg">
-                    <label class="required">Show Name</label>
-                    <input class="form-control" type="text" th:field="*{showName}" placeholder="e.g. Maintenance Phase">
+                    <label for="name" class="required">Show Name</label>
+                    <input id="name" class="form-control" type="text" th:field="*{showName}" placeholder="e.g. Maintenance Phase">
                     <span class="field-error" th:if="${#fields.hasErrors('showName')}" th:errors="*{showName}"></span>
                 </div>
 
                 <div class="fg">
-                    <label class="required">Hosts</label>
-                    <input class="form-control" type="text" th:field="*{hosts}" placeholder="e.g. Aubrey Gordon, Michael Hobbes">
+                    <label for="hosts" class="required">Hosts</label>
+                    <input id="hosts" class="form-control" type="text" th:field="*{hosts}" placeholder="e.g. Aubrey Gordon, Michael Hobbes">
                     <span class="field-error" th:if="${#fields.hasErrors('hosts')}" th:errors="*{hosts}"></span>
                 </div>
 
                 <div class="fg">
-                    <label>Guests</label>
-                    <input class="form-control" type="text" th:field="*{guests}" placeholder="e.g. Brian Chesky">
+                    <label for="guests">Guests</label>
+                    <input id="guests" class="form-control" type="text" th:field="*{guests}" placeholder="e.g. Brian Chesky">
                 </div>
 
                 <div class="fg">
-                    <label>Network</label>
-                    <input class="form-control" type="text" th:field="*{network}" placeholder="e.g. Spotify, Acast">
+                    <label for="network">Network</label>
+                    <input id="network" class="form-control" type="text" th:field="*{network}" placeholder="e.g. Spotify, Acast">
                 </div>
 
                 <div class="fg">
-                    <label>Episode Number</label>
-                    <input class="form-control" type="text" th:field="*{episodeNumber}" placeholder="e.g. S3E12, EP 178">
+                    <label for="epNumber">Episode Number</label>
+                    <input id="epNumber" class="form-control" type="text" th:field="*{episodeNumber}" placeholder="e.g. S3E12, EP 178">
                 </div>
 
                 <div class="fg">
-                    <label>Season Number</label>
-                    <input class="form-control" type="number" th:field="*{seasonNumber}" min="1" max="50" placeholder="e.g. 3">
+                    <label for="seasonNumber">Season Number</label>
+                    <input id="seasonNumber" class="form-control" type="number" th:field="*{seasonNumber}" min="1" max="50" placeholder="e.g. 3">
                 </div>
 
                 <div class="fg">
-                    <label class="required">Category</label>
-                    <select class="form-select" th:field="*{category}">
+                    <label for="category" class="required">Category</label>
+                    <select id="category" class="form-select" th:field="*{category}">
                         <option value="">Select...</option>
                         <option th:each="c : ${categories}" th:value="${c}"
                                 th:text="${#strings.replace(c.name(),'_',' ')}"></option>
@@ -80,8 +81,8 @@
                 </div>
 
                 <div class="fg">
-                    <label class="required">Listening Status</label>
-                    <select class="form-select" th:field="*{status}">
+                    <label for="listeningStatus" class="required">Listening Status</label>
+                    <select id="listeningStatus" class="form-select" th:field="*{status}">
                         <option value="">Select...</option>
                         <option th:each="s : ${statuses}" th:value="${s}"
                                 th:text="${#strings.replace(s.name(),'_',' ')}"></option>
@@ -92,8 +93,8 @@
                 <div class="section-label">Listening Details</div>
 
                 <div class="fg">
-                    <label>Listening Context</label>
-                    <select class="form-select" th:field="*{listeningContext}">
+                    <label for="listeningContext">Listening Context</label>
+                    <select id="listeningContext" class="form-select" th:field="*{listeningContext}">
                         <option value="">Select...</option>
                         <option th:each="c : ${contexts}" th:value="${c}"
                                 th:text="${#strings.replace(c.name(),'_',' ')}"></option>
@@ -101,8 +102,8 @@
                 </div>
 
                 <div class="fg">
-                    <label>Playback Speed</label>
-                    <select class="form-select" th:field="*{playbackSpeed}">
+                    <label for="speed">Playback Speed</label>
+                    <select id="speed" class="form-select" th:field="*{playbackSpeed}">
                         <option value="">Select...</option>
                         <option th:each="s : ${speeds}" th:value="${s}"
                                 th:text="${#strings.replace(#strings.replace(s.name(),'SPEED_',''),'_','.')}"></option>
@@ -110,58 +111,58 @@
                 </div>
 
                 <div class="fg">
-                    <label>Duration (minutes)</label>
-                    <input class="form-control" type="number" th:field="*{durationMinutes}" min="1" max="900" placeholder="e.g. 92">
+                    <label for="duration">Duration (minutes)</label>
+                    <input id="duration" class="form-control" type="number" th:field="*{durationMinutes}" min="1" max="900" placeholder="e.g. 92">
                     <span class="field-error" th:if="${#fields.hasErrors('durationMinutes')}" th:errors="*{durationMinutes}"></span>
                 </div>
 
                 <div class="fg">
-                    <label>Minutes Listened</label>
-                    <input class="form-control" type="number" th:field="*{minutesListened}" min="0" max="900" placeholder="e.g. 45">
+                    <label for="minListened">Minutes Listened</label>
+                    <input id="minListened" class="form-control" type="number" th:field="*{minutesListened}" min="0" max="900" placeholder="e.g. 45">
                     <span class="field-error" th:if="${#fields.hasErrors('minutesListened')}" th:errors="*{minutesListened}"></span>
                 </div>
 
                 <div class="fg">
-                    <label>Rating (1-5 stars)</label>
-                    <input class="form-control" type="number" th:field="*{rating}" min="1" max="5" placeholder="1-5">
+                    <label for="rating">Rating (1-5 stars)</label>
+                    <input id="rating" class="form-control" type="number" th:field="*{rating}" min="1" max="5" placeholder="1-5">
                     <span class="field-error" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></span>
                 </div>
 
                 <div class="fg">
-                    <label>Release Date</label>
-                    <input class="form-control" type="date" th:field="*{releaseDate}">
+                    <label for="releaseDate">Release Date</label>
+                    <input id="releaseDate" class="form-control" type="date" th:field="*{releaseDate}">
                 </div>
 
                 <div class="fg">
-                    <label>Listened Date</label>
-                    <input class="form-control" type="date" th:field="*{listenedDate}">
+                    <label for="listenedDate">Listened Date</label>
+                    <input id="listenedDate" class="form-control" type="date" th:field="*{listenedDate}">
                 </div>
 
                 <div class="fg">
-                    <label>Main Topic</label>
-                    <input class="form-control" type="text" th:field="*{mainTopic}" placeholder="e.g. Wellness industry, dopamine">
+                    <label for="mainTopic">Main Topic</label>
+                    <input id="mainTopic" class="form-control" type="text" th:field="*{mainTopic}" placeholder="e.g. Wellness industry, dopamine">
                 </div>
 
                 <div class="section-label">Quality Scores (1-10)</div>
 
                 <div class="fg">
-                    <label>📝 Content Quality</label>
-                    <input class="form-control" type="number" th:field="*{contentQuality}" min="1" max="10" placeholder="1-10">
+                    <label for="Contentquality">📝 Content Quality</label>
+                    <input id="Contentquality" class="form-control" type="number" th:field="*{contentQuality}" min="1" max="10" placeholder="1-10">
                 </div>
 
                 <div class="fg">
-                    <label>🎙 Audio Quality</label>
-                    <input class="form-control" type="number" th:field="*{audioQuality}" min="1" max="10" placeholder="1-10">
+                    <label for="audioQuality">🎙 Audio Quality</label>
+                    <input id="audioQuality" class="form-control" type="number" th:field="*{audioQuality}" min="1" max="10" placeholder="1-10">
                 </div>
 
                 <div class="fg">
-                    <label>🤝 Host Chemistry</label>
-                    <input class="form-control" type="number" th:field="*{hostChemistry}" min="1" max="10" placeholder="1-10">
+                    <label for="hostChem">🤝 Host Chemistry</label>
+                    <input id="hostChem" class="form-control" type="number" th:field="*{hostChemistry}" min="1" max="10" placeholder="1-10">
                 </div>
 
                 <div class="fg">
-                    <label>⟳ Re-listen Value</label>
-                    <input class="form-control" type="number" th:field="*{rewatchValue}" min="1" max="10" placeholder="1-10">
+                    <label for="value">⟳ Re-listen Value</label>
+                    <input id="value" class="form-control" type="number" th:field="*{rewatchValue}" min="1" max="10" placeholder="1-10">
                 </div>
 
                 <div class="checkbox-group">
@@ -186,31 +187,31 @@
                 <div class="section-label">Listening Journal</div>
 
                 <div class="fg full">
-                    <label>Mood / Vibe Tags</label>
-                    <input class="form-control" type="text" th:field="*{moodTags}" placeholder="e.g. Chaotic, hilarious, mid-week therapy">
+                    <label for="tags">Mood / Vibe Tags</label>
+                    <input id="tags" class="form-control" type="text" th:field="*{moodTags}" placeholder="e.g. Chaotic, hilarious, mid-week therapy">
                     <span class="field-error" th:if="${#fields.hasErrors('moodTags')}" th:errors="*{moodTags}"></span>
                 </div>
 
                 <div class="fg full">
-                    <label>Memorable Quote</label>
+                    <label for="memorableQuote">Memorable Quote</label>
                     <textarea class="form-control" th:field="*{memorableQuote}" placeholder="A line that stuck with you..." id="memorableQuote"></textarea>
                     <span class="field-error" th:if="${#fields.hasErrors('memorableQuote')}" th:errors="*{memorableQuote}"></span>
                 </div>
 
                 <div class="fg full">
-                    <label>💡 Key Takeaway</label>
-                    <input class="form-control" type="text" th:field="*{keyTakeaway}" placeholder="The main lesson or insight you took away">
+                    <label for="takeaway">💡 Key Takeaway</label>
+                    <input id="takeaway" class="form-control" type="text" th:field="*{keyTakeaway}" placeholder="The main lesson or insight you took away">
                     <span class="field-error" th:if="${#fields.hasErrors('keyTakeaway')}" th:errors="*{keyTakeaway}"></span>
                 </div>
 
                 <div class="fg full">
-                    <label>My Review</label>
-                    <textarea class="form-control" th:field="*{review}" placeholder="Worth listening? Hot takes?"></textarea>
+                    <label for="review">My Review</label>
+                    <textarea id="review" class="form-control" th:field="*{review}" placeholder="Worth listening? Hot takes?"></textarea>
                 </div>
 
                 <div class="fg full">
-                    <label>Personal Notes</label>
-                    <textarea class="form-control" th:field="*{personalNotes}" placeholder="Private thoughts, follow-ups, things to remember..."></textarea>
+                    <label for="notes">Personal Notes</label>
+                    <textarea id="notes" class="form-control" th:field="*{personalNotes}" placeholder="Private thoughts, follow-ups, things to remember..."></textarea>
                 </div>
 
             </div>

@@ -1,18 +1,20 @@
 package hr.algebra.podcast.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import hr.algebra.podcast.enums.ListeningContext;
 import hr.algebra.podcast.enums.ListeningStatus;
 import hr.algebra.podcast.enums.PlaybackSpeed;
 import hr.algebra.podcast.enums.PodcastCategory;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "episodes")
 public class Episode {
+
+    private static final ZoneId ZAGREB_ZONE = ZoneId.of("Europe/Zagreb");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,14 +131,14 @@ public class Episode {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-        if (addedDate == null) addedDate = LocalDate.now();
+        createdAt = LocalDateTime.now(ZAGREB_ZONE);
+        updatedAt = LocalDateTime.now(ZAGREB_ZONE);
+        if (addedDate == null) addedDate = LocalDate.now(ZAGREB_ZONE);
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now(ZAGREB_ZONE);
     }
 
     public Long getId()                                  { return id; }

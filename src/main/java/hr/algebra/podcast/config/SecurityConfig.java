@@ -24,6 +24,8 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private static final String API_EPISODES = "/api/episodes/**";
+    private static final String ROLE_ADMIN = "ADMIN";
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
@@ -31,7 +33,7 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) {
         http
             .securityMatcher("/api/**")
             .csrf(AbstractHttpConfigurer::disable)
@@ -39,10 +41,10 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/episodes/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/episodes/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/episodes/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/episodes/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, API_EPISODES).hasAnyRole("USER", ROLE_ADMIN)
+                .requestMatchers(HttpMethod.POST, API_EPISODES).hasRole(ROLE_ADMIN)
+                .requestMatchers(HttpMethod.PUT, API_EPISODES).hasRole(ROLE_ADMIN)
+                .requestMatchers(HttpMethod.DELETE, API_EPISODES).hasRole(ROLE_ADMIN)
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -52,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain mvcFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain mvcFilterChain(HttpSecurity http) {
         http
             .sessionManagement(session -> session
                     .enableSessionUrlRewriting(false)
@@ -66,8 +68,8 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers(
                     "/episodes/new", "/episodes/edit/**", "/episodes/delete/**"
-                ).hasRole("ADMIN")
-                .requestMatchers("/episodes/**").hasAnyRole("USER", "ADMIN")
+                ).hasRole(ROLE_ADMIN)
+                .requestMatchers("/episodes/**").hasAnyRole("USER", ROLE_ADMIN)
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -88,7 +90,7 @@ public class SecurityConfig {
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(
                     XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 // CSP vulnerability fix
-                .contentSecurityPolicy((csp) -> csp
+                .contentSecurityPolicy(csp -> csp
                         .policyDirectives("script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; default-src 'self'; style-src 'self';")
                 )
             );
@@ -102,7 +104,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
         return config.getAuthenticationManager();
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
@@ -37,12 +38,12 @@
 
     <form class="search-bar" th:action="@{/episodes}" method="get">
         <div class="sg" id="sgClass">
-            <label>Title / Show / Host / Guest</label>
-            <input class="form-control" type="text" name="query" th:value="${query}" placeholder="e.g. Maintenance Phase, Aubrey Gordon...">
+            <label for="tshg">Title / Show / Host / Guest</label>
+            <input id="tshg" class="form-control" type="text" name="query" th:value="${query}" placeholder="e.g. Maintenance Phase, Aubrey Gordon...">
         </div>
         <div class="sg">
-            <label>Category</label>
-            <select class="form-select" name="category">
+            <label for="cat">Category</label>
+            <select id="cat" class="form-select" name="category">
                 <option value="">All categories</option>
                 <option th:each="c : ${categories}" th:value="${c}"
                         th:text="${#strings.replace(c.name(),'_',' ')}"
@@ -50,8 +51,8 @@
             </select>
         </div>
         <div class="sg">
-            <label>Status</label>
-            <select class="form-select" name="status">
+            <label for="stat">Status</label>
+            <select id="stat" class="form-select" name="status">
                 <option value="">All statuses</option>
                 <option th:each="s : ${statuses}" th:value="${s}"
                         th:text="${#strings.replace(s.name(),'_',' ')}"

@@ -1,13 +1,12 @@
 package hr.algebra.podcast.dto;
 
+import jakarta.validation.constraints.*;
 import hr.algebra.podcast.entity.Episode;
 import hr.algebra.podcast.enums.ListeningContext;
 import hr.algebra.podcast.enums.ListeningStatus;
 import hr.algebra.podcast.enums.PlaybackSpeed;
 import hr.algebra.podcast.enums.PodcastCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

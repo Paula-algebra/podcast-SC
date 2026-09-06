@@ -1,14 +1,14 @@
 package hr.algebra.podcast.entity;
 
-import hr.algebra.podcast.enums.Role;
 import jakarta.persistence.*;
+import hr.algebra.podcast.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "users")
@@ -39,7 +39,7 @@ public class User implements UserDetails {
 
     @PrePersist
     protected void onCreate() {
-        registeredAt = LocalDateTime.now();
+        registeredAt = LocalDateTime.now(ZoneId.of("Europe/Zagreb"));
     }
 
     @Override
