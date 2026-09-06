@@ -46,7 +46,7 @@ jobs:
       - name: Start podcast app
         run: |
           nohup mvn spring-boot:run > app.log 2>&1 &
-          sleep 30
+          sleep 60
 
       - name: Check app
         run: curl --fail http://localhost:8080
