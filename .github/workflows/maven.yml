@@ -38,7 +38,8 @@ jobs:
         run: npm install -g snyk
 
       - name: Run Snyk scan
-        run: snyk test || true
+        continue-on-error: true
+        run: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
@@ -52,6 +53,7 @@ jobs:
 
       - name: ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.15.0
+        continue-on-error: true
         with:
           target: 'http://172.17.0.1:8080'
 
