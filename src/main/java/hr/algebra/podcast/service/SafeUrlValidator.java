@@ -43,7 +43,7 @@ public class SafeUrlValidator {
         URI uri;
         try {
             uri = URI.create(rawUrl).normalize();
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException _) {
             throw new IllegalArgumentException("Malformed URL");
         }
 
@@ -73,7 +73,7 @@ public class SafeUrlValidator {
                     throw new IllegalArgumentException("Host resolves to a private network");
                 }
             }
-        } catch (UnknownHostException ex) {
+        } catch (UnknownHostException _) {
             throw new IllegalArgumentException("Could not resolve host");
         }
 
