@@ -9,6 +9,8 @@
 name: Java CI with security scans
 
 on:
+  workflow_dispatch:
+  
   push:
     branches: [ "KrznaricPaula_SC" ]
   pull_request:
