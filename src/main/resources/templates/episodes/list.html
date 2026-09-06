@@ -36,6 +36,28 @@
         <span class="user-badge" th:text="${episodes.size()} + ' episodes'"></span>
     </div>
 
+    <form sec:authorize="hasRole('ADMIN')"
+          class="search-bar"
+          th:action="@{/episodes/import}"
+          method="post">
+
+        <div class="sg">
+            <label for="importUrl">Import episodes from JSON URL</label>
+            <input id="importUrl"
+                   class="form-control"
+                   type="url"
+                   name="url"
+                   placeholder="https://episodeurl.com/"
+                   required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Import episodes
+        </button>
+    </form>
+
+    <div th:if="${importError}" role="alert" th:text="${importError}"></div>
+
     <form class="search-bar" th:action="@{/episodes}" method="get">
         <div class="sg" id="sgClass">
             <label for="tshg">Title / Show / Host / Guest</label>
