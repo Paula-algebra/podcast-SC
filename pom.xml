@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.0.8</version>
         <relativePath/>
     </parent>
 
@@ -22,7 +22,9 @@
     <properties>
         <java.version>25</java.version>
         <springdoc.version>3.1.0</springdoc.version>
-        <java-jwt.version>4.4.0</java-jwt.version>
+        <java-jwt.version>4.6.0</java-jwt.version>
+        <jackson.version>2.21.6</jackson.version>
+        <jackson-databind.version>3.1.6</jackson-databind.version>
     </properties>
 
     <dependencies>
@@ -73,7 +75,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <version>7.0.7</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
     </dependencies>
 
