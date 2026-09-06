@@ -1,12 +1,12 @@
 package hr.algebra.podcast.controller.mvc;
 
+import org.springframework.web.bind.annotation.*;
 import hr.algebra.podcast.dto.Dto;
 import hr.algebra.podcast.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthMvcController {
 
     private final AuthService authService;
+    private static final String AUTH_REGISTER = "auth/register";
 
     public AuthMvcController(AuthService authService) {
         this.authService = authService;
@@ -27,7 +28,7 @@ public class AuthMvcController {
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("registerRequest", new Dto.RegisterRequest("", "", ""));
-        return "auth/register";
+        return AUTH_REGISTER;
     }
 
     @PostMapping("/register")
@@ -38,7 +39,7 @@ public class AuthMvcController {
         Model model
     ) {
         if (result.hasErrors()) {
-            return "auth/register";
+            return AUTH_REGISTER;
         }
         try {
             authService.register(request);
@@ -46,7 +47,7 @@ public class AuthMvcController {
             return "redirect:/auth/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "auth/register";
+            return AUTH_REGISTER;
         }
     }
 }

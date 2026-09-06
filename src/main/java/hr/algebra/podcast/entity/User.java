@@ -1,18 +1,24 @@
 package hr.algebra.podcast.entity;
 
-import hr.algebra.podcast.enums.Role;
 import jakarta.persistence.*;
+import hr.algebra.podcast.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.time.ZoneId;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +45,7 @@ public class User implements UserDetails {
 
     @PrePersist
     protected void onCreate() {
-        registeredAt = LocalDateTime.now();
+        registeredAt = LocalDateTime.now(ZoneId.of("Europe/Zagreb"));
     }
 
     @Override

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vulnerable Demo Login</title>
+</head>
+<body>
+<h1>Demo login</h1>
+
+<form th:action="@{/auth/demo/login}" method="post">
+    <label>
+        Username:
+        <input name="username" required>
+    </label>
+    <label>
+        Password:
+        <input name="password" type="password" required>
+    </label>
+    <button type="submit">Log in</button>
+</form>
+</body>
+</html>

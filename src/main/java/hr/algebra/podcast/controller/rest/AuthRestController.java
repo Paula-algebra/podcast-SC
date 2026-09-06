@@ -1,5 +1,6 @@
 package hr.algebra.podcast.controller.rest;
 
+import org.springframework.web.bind.annotation.*;
 import hr.algebra.podcast.dto.Dto;
 import hr.algebra.podcast.entity.RefreshToken;
 import hr.algebra.podcast.entity.User;
@@ -14,7 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -59,7 +60,7 @@ public class AuthRestController {
 
     @PostMapping("/refresh")
     @Operation(summary = "Obtain a new access token using a refresh token")
-    public ResponseEntity<?> refresh(@Valid @RequestBody Dto.RefreshTokenRequest request) {
+    public ResponseEntity<Dto.TokenResponse> refresh(@Valid @RequestBody Dto.RefreshTokenRequest request) {
         return refreshTokenService.findByToken(request.refreshToken())
             .filter(refreshTokenService::isValid)
             .map(rt -> {

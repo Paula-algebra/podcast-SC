@@ -1,5 +1,6 @@
 package hr.algebra.podcast.controller.mvc;
 
+import org.springframework.web.bind.annotation.*;
 import hr.algebra.podcast.dto.EpisodeDto;
 import hr.algebra.podcast.entity.User;
 import hr.algebra.podcast.enums.ListeningContext;
@@ -13,7 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.NoSuchElementException;
@@ -23,6 +23,11 @@ import java.util.NoSuchElementException;
 public class EpisodeMvcController {
 
     private final EpisodeService episodeService;
+    private static final String EPISODE_ATTRIBUTE = "episode";
+    private static final String MESSAGE_SUCCESS = "successMessage";
+    private static final String EPISODES_FORM = "episodes/form";
+    private static final String EDIT_MODE = "editMode";
+    private static final String REDIRECT = "redirect:/episodes";
 
     public EpisodeMvcController(EpisodeService episodeService) {
         this.episodeService = episodeService;
@@ -51,19 +56,19 @@ public class EpisodeMvcController {
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
         try {
-            model.addAttribute("episode", episodeService.findById(id));
+            model.addAttribute(EPISODE_ATTRIBUTE, episodeService.findById(id));
             return "episodes/detail";
-        } catch (NoSuchElementException e) {
-            return "redirect:/episodes";
+        } catch (NoSuchElementException _) {
+            return REDIRECT;
         }
     }
 
     @GetMapping("/new")
     @PreAuthorize("hasRole('ADMIN')")
     public String newForm(Model model) {
-        model.addAttribute("episode", new EpisodeDto(
+        model.addAttribute(EPISODE_ATTRIBUTE, new EpisodeDto(
             null, "", "", "", "", "", "", null,
-            null, null, null, null,
+                PodcastCategory.TECHNOLOGY, ListeningStatus.QUEUED, null, null,
             null, null, null, null, null, null, null,
             false, false, false, false,
             null, null, null,
@@ -71,8 +76,8 @@ public class EpisodeMvcController {
             null, null, null
         ));
         addEnumsToModel(model);
-        model.addAttribute("editMode", false);
-        return "episodes/form";
+        model.addAttribute(EDIT_MODE, false);
+        return EPISODES_FORM;
     }
 
     @PostMapping("/new")
@@ -86,24 +91,24 @@ public class EpisodeMvcController {
     ) {
         if (result.hasErrors()) {
             addEnumsToModel(model);
-            model.addAttribute("editMode", false);
-            return "episodes/form";
+            model.addAttribute(EDIT_MODE, false);
+            return EPISODES_FORM;
         }
         episodeService.create(dto, currentUser);
-        redirectAttributes.addFlashAttribute("successMessage", "Episode added to your queue.");
-        return "redirect:/episodes";
+        redirectAttributes.addFlashAttribute(MESSAGE_SUCCESS, "Episode added to your queue.");
+        return REDIRECT;
     }
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String editForm(@PathVariable Long id, Model model) {
         try {
-            model.addAttribute("episode", episodeService.findById(id));
+            model.addAttribute(EPISODE_ATTRIBUTE, episodeService.findById(id));
             addEnumsToModel(model);
-            model.addAttribute("editMode", true);
-            return "episodes/form";
-        } catch (NoSuchElementException e) {
-            return "redirect:/episodes";
+            model.addAttribute(EDIT_MODE, true);
+            return EPISODES_FORM;
+        } catch (NoSuchElementException _) {
+            return REDIRECT;
         }
     }
 
@@ -118,20 +123,20 @@ public class EpisodeMvcController {
     ) {
         if (result.hasErrors()) {
             addEnumsToModel(model);
-            model.addAttribute("editMode", true);
-            return "episodes/form";
+            model.addAttribute(EDIT_MODE, true);
+            return EPISODES_FORM;
         }
         episodeService.update(id, dto);
-        redirectAttributes.addFlashAttribute("successMessage", "Episode updated.");
-        return "redirect:/episodes";
+        redirectAttributes.addFlashAttribute(MESSAGE_SUCCESS, "Episode updated.");
+        return REDIRECT;
     }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         episodeService.delete(id);
-        redirectAttributes.addFlashAttribute("successMessage", "Episode removed.");
-        return "redirect:/episodes";
+        redirectAttributes.addFlashAttribute(MESSAGE_SUCCESS, "Episode removed.");
+        return REDIRECT;
     }
 
     private void addEnumsToModel(Model model) {

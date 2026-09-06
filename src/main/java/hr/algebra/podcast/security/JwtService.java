@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Service
 public class JwtService {
@@ -26,22 +26,25 @@ public class JwtService {
 
     public String generateAccessToken(UserDetails userDetails) {
         String role = userDetails.getAuthorities().stream()
-            .findFirst()
-            .map(GrantedAuthority::getAuthority)
-            .orElse("");
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse("");
+
+        Instant now = Instant.now();
+        Instant expiry = now.plusMillis(accessExpiryMs);
 
         return JWT.create()
-            .withSubject(userDetails.getUsername())
-            .withClaim("role", role)
-            .withIssuedAt(new Date())
-            .withExpiresAt(new Date(System.currentTimeMillis() + accessExpiryMs))
-            .sign(algorithm());
+                .withSubject(userDetails.getUsername())
+                .withClaim("role", role)
+                .withIssuedAt(now)
+                .withExpiresAt(expiry)
+                .sign(algorithm());
     }
 
     public String extractUsername(String token) {
         try {
             return decode(token).getSubject();
-        } catch (JWTVerificationException e) {
+        } catch (JWTVerificationException _) {
             return null;
         }
     }
@@ -55,9 +58,12 @@ public class JwtService {
 
     private boolean isExpired(String token) {
         try {
-            Date expiresAt = decode(token).getExpiresAt();
-            return expiresAt == null || expiresAt.before(new Date());
-        } catch (JWTVerificationException e) {
+            Instant expiresAt = decode(token).getExpiresAtAsInstant();
+
+            return expiresAt == null
+                    || expiresAt.isBefore(Instant.now());
+
+        } catch (JWTVerificationException _) {
             return true;
         }
     }
